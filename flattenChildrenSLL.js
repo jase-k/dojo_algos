@@ -47,6 +47,7 @@ class SLL{
             runner = runner.next;
         }
     }
+
     flattenChildren(){
         var runner = this.head
         
@@ -55,7 +56,7 @@ class SLL{
             if(runner.child != null){
                 var tempNode = runner.next
                 //point node.next to this.head of child.
-                runner.next = runner.child
+                runner.next = runner.child.head
                 while(runner.next != null){
                     runner = runner.next
                 }
