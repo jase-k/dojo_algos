@@ -17,25 +17,76 @@
                     &  &
                     #  #
 #############################################################################################################
-function meetRobots(counter = 1 ){
-    if(didWeMeet()){
-        return True
+*/
+class Robot{
+    position; 
+    parachute;
+    static robots = []
+
+
+    constructor(number){
+        this.position = number
+        this.parachute = number
+        Robot.robots.push(this)
+    }
+
+    moveLeft(){
+        this.position--
+    }
+
+    moveRight(){
+        this.position++
+    }
+
+    onTopOfParachute(){
+        for(var i = 0; i < Robot.robots.length; i++){
+            if(Robot.robots[i].parachute == this.position){
+                return true
+            }
+        }
+        return false
+    }
+
+    static didWeMeet(){
+        if(Robot.robots[0]){
+            let position = Robot.robots[0].position
+            for(var i = 0; i < Robot.robots.length; i++){
+                if(Robot.robots[i].position != position){
+                    return false
+                }
+            }
+            return true
+        }
+        else{
+            return false
+        }
+    }
+} 
+
+function meetRobots(counter = 1, robot1 = new Robot(10), robot2 = new Robot(22)){
+    console.log("Robot 1 Position: "+ robot1.position + "Robot 2 Position: "+ robot2.position)
+    if(Robot.didWeMeet()){
+        return true
     }
     else{
-        for(var = 0; i < counter; i++){
-            moveLeft()
+        for(var i = 0; i < counter; i++){
+            robot1.moveLeft()
+            robot2.moveLeft()
         }
-        for(var = 0; i < counter; i++){
-            if(!onTopOfParachute()){
-                moveRight()
+        console.log("Robot 1 Position: "+ robot1.position + "Robot 2 Position: "+ robot2.position)
+        for(var i = 0; i < counter; i++){
+            if(!robot1.onTopOfParachute()){
+                robot1.moveRight()
+            }
+            if(!robot2.onTopOfParachute()){
+                robot2.moveRight()
             }
         }
     }
-    return meetRobots(counter++)
+    counter++
+    return meetRobots(counter, robot1, robot2)
 }
-*/
-
-
+meetRobots()
 
 
 
