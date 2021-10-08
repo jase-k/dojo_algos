@@ -82,20 +82,49 @@ class DLL{
             runner = runner.prev
         }
     }
+    reverseList(){
+        var runner = this.head
+        if(!this.head){
+            return this
+        }
+        while(runner){
+            var temp = runner.next
+            runner.next = runner.prev
+            runner.prev = temp
+            runner = temp
+        }
+        temp = this.head
+        this.head = this.tail;
+        this.tail = temp
+
+        return this
+    }
+    reverseListRecursive(runner = this.head){
+        if(!runner){
+            var temp = this.head
+            this.head = this.tail;
+            this.tail = temp
+            return this
+        }
+        var nextNode = runner.next
+        runner.next = runner.prev
+        runner.prev = temp
+        return this.reverseListRecursive(nextNode)
+    }
+
 }
 var dll = new DLL();
 dll.addToFront(1);
 dll.addToFront(2);
 dll.addToFront(3);
 dll.addToFront(4);
-console.log("Current Length:", dll.length)
-dll.addtoBack(4);
-dll.addtoBack(3);
-dll.addtoBack(2);
-dll.addtoBack(1);
-dll.removeFromFront();
-dll.removeFromBack();
+dll.addToFront(5);
+dll.addToFront(6);
+dll.addToFront(7);
 dll.printList();
 console.log("================================")
-dll.printListBackwards();
-console.log("Current Length:", dll.length)
+dll.reverseList();
+dll.printList();
+console.log("================================")
+dll.reverseListRecursive();
+dll.printList();
