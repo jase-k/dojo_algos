@@ -83,6 +83,24 @@ class BST {
         }
         return false
     }
+
+    height(node = this.root){
+        console.log(node)
+        if(node == null){
+            return 0;
+        }
+        return Math.max(this.height(node.right)+1, this.height(node.left)+1)
+    }
+
+    isBalanced(){
+        var num = this.height(this.root.left) - this.height(this.root.right)
+        if(num >= -1 && num <= 1 ){
+            return true
+        }
+        else{
+            return false
+        }
+    }
 }
 
 var bst = new BST();
@@ -91,9 +109,10 @@ bst.add(5)
 bst.add(4)
 bst.add(6)
 bst.add(7)
-bst.add(6.5)
 console.log(bst.findMin())
 console.log(bst.findMax())
 console.log(bst.contains(8))
 console.log(bst.contains(7))
 console.log(bst.size())
+console.log(bst.height())
+console.log(bst.isBalanced())
