@@ -101,18 +101,142 @@ class BST {
             return false
         }
     }
+    remove(value, node = this.root, prevNode = this.root){
+        if(node == null){
+            return this
+        }
+        if(node.value == value){
+            if(!node.right && !node.left){
+                if(node == this.root){
+                    this.root = null
+                    return this;
+                }
+                if(prevNode.value < node.value){
+                    prevNode.right = null
+                }
+                else{
+                    prevNode.left = null
+                }
+            }
+            else if(!node.right){
+                if(prevNode.value < node.value){
+                    prevNode.right = node.left
+                }
+                else{
+                    prevNode.left = node.left
+                }
+            }
+            else if(!node.left){
+                if(prevNode.value < node.value){
+                    prevNode.right = node.right
+                }
+                else{
+                    prevNode.left = node.right
+                }
+            }
+            else{
+                if(prevNode.value < node.value){
+                    prevNode.right = node.left
+                    var runner = node.left
+                    while(runner.right){
+                        runner = runner.right
+                    }
+                    runner.right = node.right
+                }
+                else{
+                    prevNode.left = node.right
+                    var runner = node.right;
+                    while(runner.left){
+                        runner = runner.left
+                    }
+                    runner.right = node.left
+                }
+            }
+            return this
+        }
+        else if(node.value < value){
+            return this.remove(value, node.right, node)
+        }
+        else{
+            return this.remove(value, node.left, node)
+        }
+    }
+    delete(value){ //deletes first instance
+        if(this.root == null){
+            return null;
+        }
+        let runner = this.root;
+        let temp;
+        while(runner) {
+            if(runner.value == value){
+                if(runner.left == null && runner.right == null){
+                    if(temp.value > runner.value){
+                        temp.left = null;
+                        return this;
+                    } else {
+                        temp.right = null;
+                        return this;
+                    }
+                }
+                if(runner.left != null && runner.right == null){
+                    if(temp.value > runner.value){
+                        temp.left = runner.left;
+                        return this;
+                    } else {
+                        temp.right = runner.left;
+                        return this;
+                    }
+                }
+                if(runner.left == null && runner.right != null){
+                    if(temp.value > runner.value){
+                        temp.left = runner.right;
+                        return this;
+                    } else {
+                        temp.right = runner.right;
+                        return this;
+                    }
+                }
+                else {
+                    let minValue = this.findMin(runner.right);
+                    this.delete(minValue);
+                    runner.value = minValue;
+                    return this;
+                }
+            }
+            else if(runner.value > value){
+                temp = runner;
+                runner = runner.left;
+            }
+            else{
+                temp = runner;
+                runner = runner.right;
+            }
+        }
+    }
 }
+
 
 var bst = new BST();
 
-bst.add(5)
-bst.add(4)
-bst.add(6)
+bst.add(3)
+bst.add(2)
+bst.add(1)
 bst.add(7)
+bst.add(5)
+bst.add(6)
+bst.add(4)
+bst.add(9)
+bst.add(8)
+bst.add(10)
 console.log(bst.findMin())
 console.log(bst.findMax())
 console.log(bst.contains(8))
 console.log(bst.contains(7))
 console.log(bst.size())
-console.log(bst.height())
-console.log(bst.isBalanced())
+// console.log(bst.height())
+// console.log(bst.isBalanced())
+bst.remove(7)
+bst.remove(2)
+console.log(bst.contains(7))
+console.log(bst.contains(2))
+console.log(bst.size())
