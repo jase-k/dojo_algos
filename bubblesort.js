@@ -17,5 +17,10 @@ function bubbleSort(array, sorted = false, iteration = 0 ){
     iteration++
     return bubbleSort(array, sorted, iteration)
 }
-
-console.log(bubbleSort(array))
+array = []
+for(let i = 0; i < 1000; i++){
+    array.push(Math.floor(Math.random()*1000))
+}
+console.time("BubleSort 1000x")
+bubbleSort(array)
+console.timeEnd("BubleSort 1000x")
