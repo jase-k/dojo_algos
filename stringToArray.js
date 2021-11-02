@@ -1,9 +1,8 @@
-let sentence = "Hi everybody, welcome to week two"
+let sentence = "Hi everybody, welcome to week two      "
 
 const stringToArray = (string) => {
     let regex = /[a-zA-Z0-9]/
     let array = [""]
-    let i = 0;
     for(let i =0; i < string.length; i++){
         if(regex.test(string[i])){
             //conctanate a string
@@ -15,6 +14,10 @@ const stringToArray = (string) => {
             }
         }
     }
+    if(array[array.length-1] == ''){
+        array.pop()
+    }
+    
     return array
 } 
 
